@@ -3,7 +3,7 @@ from os import path as op
 from setuptools import setup
 
 # example: https://github.com/pypa/sampleproject
-def _read(fname='README.md', line=None):
+def _read(fname='readme.md', line=None):
     try:
         if line is None:
             return open(op.join(op.dirname(__file__), fname)).read()
@@ -11,10 +11,10 @@ def _read(fname='README.md', line=None):
     except IOError:
         return ''
 
-name = 'pgorm'
+name = 'py-pgorm'
 setup(
     name=name,
-    version="0.0.1",
+    version="0.0.2",
     author="ahuigo",
     author_email="ahui132@qq.com",
     license="MIT",

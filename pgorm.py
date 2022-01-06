@@ -86,9 +86,16 @@ def insertUpdate(cursor, table, row, onConflictKeys='', returnId=False)->int:
         print([cursor.query])
         raise e
 
-psycopg2.extras.DictCursor.insertBatch = insertBatch
-psycopg2.extras.DictCursor.insertUpdate= insertUpdate
-def getDbCursor(dbconf)->psycopg2.extras.DictCursor:
+class SimpleDictCursor(psycopg2.extras.DictCursor):
+    def insertBatch(cursor, *args, **kwargs): 
+        return insertBatch(cursor, *args, **kwargs)
+
+    def insertUpdate(cursor, table, row, onConflictKeys='', returnId=False): 
+        return insertUpdate(cursor, table, row, onConflictKeys, returnId)
+
+# SimpleDictCursor.insertUpdate = insertUpdate
+
+def getDbCursor(dbconf)->SimpleDictCursor:
     # {database, user,  password, host, port}
     conn = psycopg2.connect(**dbconf)
     conn.set_session(readonly=False, autocommit=True)

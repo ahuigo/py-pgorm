@@ -6,7 +6,10 @@ dbconf={
 cursor = getDbCursor(dbconf)
 
 def test_create_table():
-    sql = '''create table if not exists t(code varchar(10) not null, label real not null);'''
+    sql = '''create table if not exists t(
+        code varchar(10) not null, 
+        label real not null
+    );'''
     cursor.execute(sql)
 
 # test alter column

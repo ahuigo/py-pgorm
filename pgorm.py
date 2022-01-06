@@ -3,6 +3,9 @@ import psycopg2
 import json
 import psycopg2.extras
 from datetime import datetime
+from typing import Dict
+from typing import Union
+
 """
 Db
 """
@@ -95,7 +98,7 @@ class SimpleDictCursor(psycopg2.extras.DictCursor):
 
 # SimpleDictCursor.insertUpdate = insertUpdate
 
-def getDbCursor(dbconf)->SimpleDictCursor:
+def getDbCursor(dbconf: Dict[str,Union[str,int]])->SimpleDictCursor:
     # {database, user,  password, host, port}
     conn = psycopg2.connect(**dbconf)
     conn.set_session(readonly=False, autocommit=True)

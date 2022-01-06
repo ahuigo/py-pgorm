@@ -5,6 +5,10 @@ dbconf={
 }
 cursor = getDbCursor(dbconf)
 
+def test_create_table():
+    sql = '''create table if not exists t(code varchar(10) not null, label real not null);'''
+    cursor.execute(sql)
+
 # test alter column
 def test_alter_column():
     cursor.execute(f'alter table t DROP CONSTRAINT  IF EXISTS code_pkey')

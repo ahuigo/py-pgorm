@@ -14,14 +14,18 @@ def test_alter_column():
 # test insert batch
 def test_insert_batch():
     # row = {"op": "0001", "action": "profit", "time": datetime.today()}
+    # import pandas as pd
+    # rows = pd.DataFrame([{'code':'00000.XX',"label":3}])
     rows = [
         {"code": "a", "label": 2},
         {"code": "code4", "label": 4},
     ]
     insertBatch(cursor, 't', rows, onConflictKeys="code")
-    # import pandas as pd
-    # rows = pd.DataFrame([{'code':'00000.XX',"label":3}])
-    insertUpdate(cursor, "t", rows[0], onConflictKeys="code")
+
+# test insert update
+def test_insert_update():
+    row = {"code": "a", "label": 3}
+    insertUpdate(cursor, "t", row, onConflictKeys="code")
 
     # count
     cursor.execute(f'select count(*) as count from t ')
@@ -34,8 +38,8 @@ def test_fetchone():
     cursor.execute(f'select code,label from t where code=%s limit 1', ['a'])
     assert cursor.query==b"select code,label from t where code='a' limit 1"
     res = cursor.fetchone()
-    assert res["label"] == 2
-    assert res[1] ==2
+    assert res["label"] == 3
+    assert res[1] ==3
 
     # fetch none
     cursor.execute(f'select code,label from t where code=%s limit 1', ['not exists'])

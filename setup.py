@@ -14,7 +14,7 @@ def _read(fname='readme.md', line=None):
 name = 'py-pgorm'
 setup(
     name=name,
-    version="0.0.2",
+    version=open('version').read().strip(),
     author="ahuigo",
     author_email="ahui132@qq.com",
     license="MIT",

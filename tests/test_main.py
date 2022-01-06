@@ -5,11 +5,13 @@ dbconf={
 }
 cursor = getDbCursor(dbconf)
 
+# test alter column
 def test_alter_column():
     cursor.execute(f'alter table t DROP CONSTRAINT  IF EXISTS code_pkey')
     sql = f'alter table t add CONSTRAINT code_pkey UNIQUE (code);'
     cursor.execute(sql)
 
+# test insert batch
 def test_insert_batch():
     # row = {"op": "0001", "action": "profit", "time": datetime.today()}
     rows = [
@@ -26,6 +28,7 @@ def test_insert_batch():
     row = cursor.fetchone()
     assert row[0]>=2
 
+# test fetchone
 def test_fetchone():
     # fetchone 
     cursor.execute(f'select code,label from t where code=%s limit 1', ['a'])

@@ -12,7 +12,7 @@ Db
 
 
 # cursor.insertBatch('prices', rows, 'time,code')
-def insertBatch(cursor, table, rows, onConflictKeys=None):
+def insertBatch(cursor, table, rows, onConflictKeys=None)->int:
     if len(rows) <= 0:
         return
     if str(type(rows)) == "<class 'pandas.core.frame.DataFrame'>":
@@ -39,8 +39,9 @@ def insertBatch(cursor, table, rows, onConflictKeys=None):
     try:
         values = [[json.dumps(d) if type(d)==dict else d for d in row] for row in values]
         cursor.executemany(sql, values)
+        return cursor.rowcount
     except Exception as e:
-        print(cursor.query)
+        print("bad sql:",cursor.query)
         raise e
 
 
@@ -74,8 +75,8 @@ def insertUpdate(cursor, table, row, onConflictKeys='', returnId=False)->int:
             return cursor.fetchone()[0]
     except psycopg2.errors.UniqueViolation as e:
         if not onConflictKeys:
+            print("bad sql:",cursor.query)
             raise e
-        print([cursor.query])
         # conflictKeys += uk
 
         sql = f'update {table} set'
@@ -86,7 +87,7 @@ def insertUpdate(cursor, table, row, onConflictKeys='', returnId=False)->int:
         cursor.execute(sql, values) 
 
     except Exception as e:
-        print([cursor.query])
+        print("bad sql:",cursor.query)
         raise e
 
 class SimpleDictCursor(psycopg2.extras.DictCursor):

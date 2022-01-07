@@ -24,10 +24,12 @@ def test_insert_batch():
     # import pandas as pd
     # rows = pd.DataFrame([{'code':'00000.XX',"label":3}])
     rows = [
-        {"code": "a", "label": 2},
-        {"code": "code4", "label": 4},
+        {"code": "code1", "label": 1},
+        {"code": "code2", "label": 2},
     ]
-    insertBatch(cursor, 't', rows, onConflictKeys="code")
+    count = insertBatch(cursor, 't', rows, onConflictKeys="code")
+    print("count:", count)
+    assert count==2
 
 # test insert update
 def test_insert_update():

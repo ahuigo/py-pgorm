@@ -1,5 +1,5 @@
 pkg:
-	python -m pytest || exit 100
+	python3 -m pytest || exit 100
 	rm -rf  dist/*
 	newversion.py version
 	python3 setup.py sdist bdist_wheel

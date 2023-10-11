@@ -41,7 +41,7 @@ setup(
 
     # dependencies
     python_requires='>=3.6.1',
-    install_requires=['psycopg2>=1.0.0'],
+    install_requires=['psycopg2-binary>=2.9.9'],
 
 
     description="simple postgres orm for python",
